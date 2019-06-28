@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'COPY . /usr/share/nginx/html'
+                sh 'cp . /usr/share/nginx/html'
             }
         }
     }
