@@ -9,15 +9,20 @@ pipeline {
     stages {
         stage('Build Image') {
             steps {
-                dockerImage = docker.build  imageName + ":" + imageTag
+                script {
+                    docker.build  imageName + ":" + imageTag
+                    dockerImage = docker.build  imageName + ":" + imageTag
+                }
             }
         }
 
         stage('Push Image to Registry') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-hub', url: registryUrl]) {
+                script {
+                    withDockerRegistry([credentialsId: 'docker-hub', url: registryUrl]) {
                     dockerImage.push()
-                }                              
+                }  
+                }                            
             }
         }
     }
