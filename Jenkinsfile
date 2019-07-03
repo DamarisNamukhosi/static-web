@@ -4,7 +4,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 // input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh 'cp -r ./ /usr/share/nginx/html'
+                // sh 'cp -r ./ /usr/share/nginx/html'
                 sh "docker build -t melioratech/static-web ."
             }
         }
