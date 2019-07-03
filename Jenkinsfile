@@ -12,6 +12,7 @@ pipeline {
         stage('Push image') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-hub', url: 'https://registry.hub.docker.com']) {
+                    sh "docker login"
                     sh "docker push melioratech/static-web:latest"
                 }                              
             }
