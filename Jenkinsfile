@@ -30,7 +30,7 @@ pipeline {
         stage ('Deploy') {
             steps {
                 sh 'ssh -i ~/.ssh/scaleway.pem root@51.15.233.87'
-                sh 'docker run melioratech/static-web -p 9090:80 -d'
+                sh 'docker run -p 9090:80 melioratech/static-web'
 
                 sh 'exit'
             }
