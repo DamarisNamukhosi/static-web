@@ -1,16 +1,24 @@
-node {
-    checkout scm
-    def dockerImage
-
-    stage ('Build Image'){
-        dockerImage = docker.build("melioratech/static-web", "src/docker/Dockerfile");
+pipeline {
+    environment {
+        registryUrl = 'https://registry.hub.docker.com'
+        dockerImage = ''
+        imageName = 'melioratech/static-web'
+        imageTag = 'latest'
     }
+    agent any
+    stages {
+        stage('Build Image') {
+            steps {
+                dockerImage = docker.build  imageName + ":" + imageTag
+            }
+        }
 
-
-    stage ('Push Image') {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            input message: 'Are you sure you want to push the image to Registry? (Click "OK" to continue)'
-            dockerImage.push()
+        stage('Push image') {
+            steps {
+                withDockerRegistry([credentialsId: 'docker-hub', url: registryUrl]) {
+                    dockerImage.push()
+                }                              
+            }
         }
     }
 }
