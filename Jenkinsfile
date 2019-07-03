@@ -1,21 +1,15 @@
-pipeline {
-    agent any
-    stages {
-        stage('Build Image') {
-            steps {
-                // input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                // sh 'cp -r ./ /usr/share/nginx/html'
-                sh "docker build -t melioratech/static-web ."
-            }
-        }
+node {
+    checkout scm
+    def dockerImage
 
-        stage('Push image') {
-            steps {
-                withDockerRegistry([credentialsId: 'docker-hub', url: 'https://registry.hub.docker.com']) {
-                    sh "docker login"
-                    sh "docker push melioratech/static-web:latest"
-                }                              
-            }
+    stage ('Build Image'){
+        dockerImage = docker.build("melioratech/static-web");
+    }
+
+
+    stage ('Push Image') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
+            dockerImage.push()
         }
     }
 }
