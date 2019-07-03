@@ -10,7 +10,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    docker.build  imageName + ":" + imageTag
+                    // docker.build  imageName + ":" + imageTag
                     dockerImage = docker.build  imageName + ":" + imageTag
                 }
             }
