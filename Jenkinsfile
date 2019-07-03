@@ -1,7 +1,7 @@
 pipeline {
+    def dockerImage
     agent { docker { image 'nginx:alpine' } }
     stages {
-        def dockerImage
         stage('Build Image') {
             steps {
                 // input message: 'Finished using the web site? (Click "Proceed" to continue)'
