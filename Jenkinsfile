@@ -25,5 +25,15 @@ pipeline {
                 }                            
             }
         }
+
+
+        stage ('Deploy') {
+            steps {
+                sh 'ssh -i ~/.ssh/scaleway.pem root@51.15.233.87'
+                sh 'docker run melioratech/static-web'
+
+                sh 'exit'
+            }
+        }
     }
 }
