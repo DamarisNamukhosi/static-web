@@ -11,9 +11,7 @@ pipeline {
             steps {
                 script {
                     // docker.build  imageName + ":" + imageTag
-                    // dockerImage = docker.build  imageName + ":" + imageTag
-                    sh 'docker build -t melioratech/static-web:latest .'
-                    dockerImage = 'melioratech/static-web:latest'
+                    dockerImage = docker.build  imageName + ":" + imageTag
                 }
             }
         }
@@ -31,7 +29,7 @@ pipeline {
 
         stage ('Deploy') {
             steps {
-                sh 'ssh -i ~/.ssh/scaleway.pem root@51.15.233.87'
+                sh 'ssh -i ~/.ssh/scaleway.pem root@51.15.199.15'
                 
                 sh 'docker pull melioratech/static-web'
                 sh 'docker stop static-web || true && docker rm static-web || true'
