@@ -12,7 +12,8 @@ pipeline {
                 script {
                     // docker.build  imageName + ":" + imageTag
                     // dockerImage = docker.build  imageName + ":" + imageTag
-                    dockerImage = sh 'docker build -t melioratech/static-web:latest .'
+                    sh 'docker build -t melioratech/static-web:latest .'
+                    dockerImage = 'melioratech/static-web:latest'
                 }
             }
         }
