@@ -11,8 +11,11 @@ pipeline {
 
         stage('Build Image - Latest') {
             when {
-                branch 'origin/develop'
+                expression {
+                    return env.GIT_BRANCH == "origin/develop"
+                }
             }
+            
             steps {
                 script {
                     dockerImage = docker.build  imageName + ":latest"
@@ -22,7 +25,9 @@ pipeline {
 
         stage('Build Image - Stable') {
             when {
-                branch 'origin/master'
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }
             }
 
             steps {
