@@ -12,7 +12,7 @@ pipeline {
         stage('Build Image - Latest') {
             when {
                 expression {
-                    return env.GIT_BRANCH == "origin/develop"
+                    return env.GIT_BRANCH != "origin/master"
                 }
             }
             
