@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build Image - Latest') {
             when {
-                branch 'develop'
+                branch 'origin/develop'
             }
             steps {
                 script {
@@ -22,7 +22,7 @@ pipeline {
 
         stage('Build Image - Stable') {
             when {
-                branch 'master'
+                branch 'origin/master'
             }
 
             steps {
