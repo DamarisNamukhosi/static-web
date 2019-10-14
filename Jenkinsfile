@@ -6,8 +6,18 @@ pipeline {
         imageTag = 'latest'
     }
     agent any
+
     stages {
-        stage('Build Image') {
+        stage ('Tagging Stable') {
+            when {
+                branch 'master'
+            }
+
+            imageTag = 'stable'
+        }
+
+        stage('Build Image for Develop') {
+
             steps {
                 script {
                     // docker.build  imageName + ":" + imageTag
@@ -23,19 +33,6 @@ pipeline {
                         dockerImage.push()
                     }
                 }                            
-            }
-        }
-
-
-        stage ('Deploy') {
-            steps {
-                sh 'ssh -i ~/.ssh/scaleway.pem root@51.15.199.15'
-                
-                sh 'docker pull melioratech/static-web'
-                sh 'docker stop static-web || true && docker rm static-web || true'
-                sh 'docker run --name=static-web --restart=always -p 9090:80 -d melioratech/static-web'
-
-                sh 'exit'
             }
         }
     }
