@@ -12,8 +12,9 @@ pipeline {
             when {
                 branch 'master'
             }
-
-            imageTag = 'stable'
+            steps {
+                imageTag = 'stable'
+            }
         }
 
         stage('Build Image for Develop') {
