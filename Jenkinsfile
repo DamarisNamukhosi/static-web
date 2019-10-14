@@ -8,21 +8,26 @@ pipeline {
     agent any
 
     stages {
-        stage ('Tagging Stable') {
+
+        stage('Build Image - Latest') {
             when {
-                branch 'master'
+                branch 'develop'
             }
             steps {
-                imageTag = 'stable'
+                script {
+                    dockerImage = docker.build  imageName + ":latest"
+                }
             }
         }
 
-        stage('Build Image for Develop') {
+        stage('Build Image - Stable') {
+            when {
+                branch 'master'
+            }
 
             steps {
                 script {
-                    // docker.build  imageName + ":" + imageTag
-                    dockerImage = docker.build  imageName + ":" + imageTag
+                    dockerImage = docker.build  imageName + ":stable"
                 }
             }
         }
